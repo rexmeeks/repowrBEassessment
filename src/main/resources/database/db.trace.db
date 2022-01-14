@@ -1,0 +1,19 @@
+2022-01-14 16:23:01 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS CUSTOMERS
+(
+    ID          INT AUTO_INCREMENT PRIMARY KEY,
+    EMAIL       VARCHAR(100) NOT NULL,
+    FIRST_NAME  VARCHAR(50) NOT NULL,
+    LAST_NAME   VARCHAR(50) NOT NULL,
+    CREATED TIMESTAMP NOT NULL,
+    LAST_UPDATED TIMESTAMP,
+)[*]"; expected "identifier"; SQL statement:
+CREATE TABLE IF NOT EXISTS customers
+(
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    email       VARCHAR(100) NOT NULL,
+    first_name  VARCHAR(50) NOT NULL,
+    last_name   VARCHAR(50) NOT NULL,
+    created TIMESTAMP NOT NULL,
+    last_updated TIMESTAMP,
+) [42001-200]
