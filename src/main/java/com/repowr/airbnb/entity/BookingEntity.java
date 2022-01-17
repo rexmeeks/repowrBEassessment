@@ -1,9 +1,12 @@
 package com.repowr.airbnb.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Entity
@@ -21,8 +24,8 @@ public class BookingEntity {
     @Column(name="cust_id", insertable = false, updatable = false, nullable = false)
     private Integer custId;
 
-    @JoinColumn(name="id")
-    @OneToOne(targetEntity = RoomEntity.class, cascade = CascadeType.REFRESH)
+    @JoinColumn(name="room_id")
+    @ManyToOne(targetEntity = RoomEntity.class, cascade = CascadeType.REFRESH)
     private RoomEntity roomEntity;
 
     @Column(name="room_id", insertable = false, updatable = false, nullable = false)
@@ -34,9 +37,13 @@ public class BookingEntity {
     @Column(name="end_date", nullable = false)
     private LocalDate endDate;
 
-    @Column(name="created", nullable = false)
-    private LocalDate created;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name="created")
+    private Date created;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     @Column(name="updated")
-    private LocalDate updated;
+    private Date updated;
 }
