@@ -1,5 +1,6 @@
 package com.repowr.airbnb.service;
 
+import com.repowr.airbnb.dto.request.Reservation;
 import com.repowr.airbnb.entity.RoomEntity;
 import com.repowr.airbnb.repository.BookingRepository;
 import com.repowr.airbnb.repository.RoomRepository;
@@ -31,6 +32,9 @@ public class ReservationService {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    public ResponseEntity reserveRoom(Reservation reservation) {
+        return new ResponseEntity(HttpStatus.OK);
+    }
     //todo reserveRoomByDateAndId
 
     //todo getAllReservations - this needs to return the dates that an airBnB is booked for

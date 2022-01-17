@@ -12,6 +12,8 @@ import java.util.Date;
 @Table(name = "customers")
 public class CustomerEntity {
 
+    public CustomerEntity(){}
+
     public CustomerEntity(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
