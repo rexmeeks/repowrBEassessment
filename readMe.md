@@ -6,8 +6,8 @@ mvn spring-boot:run
 
 I didn't really have much time to do super verbose testing, but the correct flow is tested:
 to run tests import the testing postman collection under resources, go to the collection runner and 
-run the repowr assessment testing collection, in there it also has all the endpoints for the project as well, 
-only modify the requests that are marked as modifiable otherwise it'll mess with the tests
+run the repowr assessment testing collection, don't modify that one or it'll mess with the tests 
+I have setup
 
 there's also another that's Repowr Assessment Editable that you can import and change stuff on
 
