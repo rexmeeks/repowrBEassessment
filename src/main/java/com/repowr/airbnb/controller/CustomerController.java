@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    //TODO this is where we can put customer specific related endpoints, namely retrieving bookings associated with a
+    // this is where we can put customer specific related endpoints, namely retrieving bookings associated with a
     // specific customer
 
     @Autowired
@@ -20,7 +20,7 @@ public class CustomerController {
     private CustomerValidation customerValidation;
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<Object> getCustomerById (@PathVariable Integer id) {
+    public ResponseEntity getCustomerById (@PathVariable Integer id) {
         return customerService.findCustomerById(id);
     }
 

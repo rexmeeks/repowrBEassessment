@@ -18,9 +18,10 @@ public class CustomerValidation {
         else if(StringUtils.isBlank(createCustomer.getEmail()) || !Pattern.compile("^(.+)@(\\S+)$").matcher(createCustomer.getEmail()).matches()) {
             return new ResponseEntity<>("Invalid email address", HttpStatus.BAD_REQUEST);
         } else if(StringUtils.isBlank(createCustomer.getFirstName()) || createCustomer.getFirstName().length() > 150) {
-            return new ResponseEntity<>("First name is blank or an impossible length", HttpStatus.BAD_REQUEST);
+            // 151 length first name probably isn't possible lol
+            return new ResponseEntity<>("First name is blank or greater than 150 characters", HttpStatus.BAD_REQUEST);
         } else if(StringUtils.isBlank(createCustomer.getLastName()) || createCustomer.getLastName().length() > 150) {
-            return new ResponseEntity<>("Last name is blank or an impossible length", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Last name is blank or greater than 150 characters", HttpStatus.BAD_REQUEST);
         }
         return null;
     }

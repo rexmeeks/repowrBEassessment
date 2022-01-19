@@ -1,31 +1,43 @@
 package com.repowr.airbnb.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "rooms")
 public class RoomEntity {
+
+    public RoomEntity() {
+    }
+
+    public RoomEntity(String name, String address, String city, String state, String zipCode) {
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
     private Integer id;
 
-    @JoinColumn(name="id")
-    @OneToOne(targetEntity = CustomerEntity.class, cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
     private CustomerEntity customerEntity;
 
-    @JoinColumn(name="room_id")
-    @OneToMany(targetEntity = BookingEntity.class, cascade = CascadeType.REFRESH)
-    private Set<BookingEntity> bookings;
+    @OneToMany(mappedBy = "roomEntity", targetEntity = BookingEntity.class, cascade = CascadeType.REFRESH)
+    private List<BookingEntity> bookings;
 
-    @Column(name="owner_id", insertable = false, updatable = false, nullable = false)
-    private Integer ownerId;
 
     @Column(name="name", nullable = false)
     private String name;
@@ -38,6 +50,9 @@ public class RoomEntity {
 
     @Column(name="state", nullable = false, length = 2)
     private String state;
+
+    @Column(name="zip_code", nullable = false, length = 5)
+    private String zipCode;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp

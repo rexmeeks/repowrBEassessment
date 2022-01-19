@@ -13,7 +13,7 @@ public class CustomerTransformer {
         if(customerEntity == null) {
             return null;
         }
-        return new Customer(customerEntity.getId(), customerEntity.getEmail(),
+        return new Customer(customerEntity.getUserId(), customerEntity.getEmail(),
                 customerEntity.getFirstName(), customerEntity.getLastName());
     }
 }

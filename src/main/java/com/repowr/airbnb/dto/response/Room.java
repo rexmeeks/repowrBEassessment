@@ -11,6 +11,7 @@ public class Room {
 
     //I'm just going to use an integer id, in a real situation you'd want to do a random UUID
     private Integer id;
+    private Customer bookingCustomer;
     private String name;
     private Customer owner;
     private String address;
