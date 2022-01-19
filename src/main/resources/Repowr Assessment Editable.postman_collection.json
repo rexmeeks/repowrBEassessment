@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "649164c2-a907-4726-a6ea-bc840a1f458c",
+		"name": "Repowr Assessment Editable",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Customer Editable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"{{$randomEmail}}\",\r\n\"firstName\": \"{{$randomFirstName}}\",\r\n\"lastName\": \"{{$randomLastName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customer/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer by Id Editable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/customer/{{currentUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"{{currentUserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Room Editable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"ownerId\": 1,\r\n\"name\": \"{{$randomCompanyName}}\",\r\n\"address\": \"{{$randomStreetAddress}}\",\r\n\"city\": \"{{$randomCity}}\",\r\n\"state\": \"TX\",\r\n\"zipCode\": 75407\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airbnb/rooms/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"rooms",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Room by Id Editable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var i = 0;\r",
+							"while(i < 2) {\r",
+							"    pm.test(\"Status code is 200 and room is correct\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"        pm.expect(pm.response.json().id).to.eql(parseInt(pm.collectionVariables.get('roomId' + i)));\r",
+							"    });\r",
+							"    pm.collectionVariables.set('currentRoomId', pm.collectionVariables.get('roomId' + i))\r",
+							"    postman.setNextRequest(\"Get Room by Id\");\r",
+							"    i++;\r",
+							"}\r",
+							"postman.setNextRequest(\"Reserve Room\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airbnb/rooms/{{currentRoomId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"rooms",
+						"{{currentRoomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve Room Editable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"custId\": 1,\r\n\"startDate\": \"2023-09-01\",\r\n\"endDate\": \"2023-09-07\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airbnb/reserve/{{currentRoomId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"reserve",
+						"{{currentRoomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reservations Editable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setNextRequest(null);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airbnb/getReservations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"getReservations"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "currentUserId",
+			"value": null
+		},
+		{
+			"key": "userId0",
+			"value": null
+		},
+		{
+			"key": "userId1",
+			"value": null
+		},
+		{
+			"key": "userId2",
+			"value": null
+		},
+		{
+			"key": "roomId0",
+			"value": ""
+		},
+		{
+			"key": "roomId1",
+			"value": ""
+		},
+		{
+			"key": "currentRoomId",
+			"value": ""
+		},
+		{
+			"key": "currentUserId0",
+			"value": ""
+		},
+		{
+			"key": "reservationId0",
+			"value": ""
+		},
+		{
+			"key": "reservationId1",
+			"value": ""
+		},
+		{
+			"key": "currentUserId2",
+			"value": ""
+		}
+	]
+}

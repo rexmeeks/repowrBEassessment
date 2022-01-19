@@ -1,0 +1,353 @@
+{
+	"info": {
+		"_postman_id": "914ec8b7-ad19-41ea-b9d2-70cd26b724d0",
+		"name": "Repowr Assessment Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Customer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var i = 0;\r",
+							"while(i < 3) {\r",
+							"    pm.test(\"Status code is 201\", function () {\r",
+							"        pm.response.to.have.status(201);\r",
+							"    });\r",
+							"    pm.collectionVariables.set(\"userId\" + i, pm.response.text());\r",
+							"    postman.setNextRequest(\"Create Customer\");\r",
+							"    i++;\r",
+							"}\r",
+							"pm.collectionVariables.set('currentUserId', pm.collectionVariables.get('userId0'));\r",
+							"postman.setNextRequest(\"Get Customer by Id\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"{{$randomEmail}}\",\r\n\"firstName\": \"{{$randomFirstName}}\",\r\n\"lastName\": \"{{$randomLastName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customer/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var i = 0;\r",
+							"while(i < 3) {\r",
+							"    pm.test(\"Status code is 200 and customer is correct\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"        pm.expect(pm.response.json().id).to.eql(parseInt(pm.collectionVariables.get('userId' + i)));\r",
+							"    });\r",
+							"    pm.collectionVariables.set('currentUserId', pm.collectionVariables.get('userId' + i))\r",
+							"    postman.setNextRequest(\"Get Customer by Id\");\r",
+							"    i++;\r",
+							"}\r",
+							"postman.setNextRequest(\"Create Room\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/customer/{{currentUserId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"{{currentUserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Room",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var i = 0;\r",
+							"while(i < 2) {\r",
+							"    console.log(\"iteration #\" + i);\r",
+							"    pm.test(\"Status code is 201\", function () {\r",
+							"        pm.response.to.have.status(201);\r",
+							"    });\r",
+							"    pm.collectionVariables.set(\"roomId\" + i, pm.response.text());\r",
+							"    console.log(\"response \" + pm.response.text());\r",
+							"    postman.setNextRequest(\"Create Room\");\r",
+							"    i++;\r",
+							"}\r",
+							"pm.collectionVariables.set('currentRoomId', pm.collectionVariables.get('roomId0'));\r",
+							"postman.setNextRequest(\"Get Room by Id\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"ownerId\": 1,\r\n\"name\": \"{{$randomCompanyName}}\",\r\n\"address\": \"{{$randomStreetAddress}}\",\r\n\"city\": \"{{$randomCity}}\",\r\n\"state\": \"TX\",\r\n\"zipCode\": 75407\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airbnb/rooms/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"rooms",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Room by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var i = 0;\r",
+							"while(i < 2) {\r",
+							"    pm.test(\"Status code is 200 and room is correct\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"        pm.expect(pm.response.json().id).to.eql(parseInt(pm.collectionVariables.get('roomId' + i)));\r",
+							"    });\r",
+							"    pm.collectionVariables.set('currentRoomId', pm.collectionVariables.get('roomId' + i))\r",
+							"    postman.setNextRequest(\"Get Room by Id\");\r",
+							"    i++;\r",
+							"}\r",
+							"postman.setNextRequest(\"Reserve Room\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airbnb/rooms/{{currentRoomId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"rooms",
+						"{{currentRoomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve Room",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var i = 0;\r",
+							"var j = 0;\r",
+							"while(i < 3) {\r",
+							"    pm.collectionVariables.set(\"currentUserId\" + j, pm.response.body);\r",
+							"    while(j < 2) {\r",
+							"        pm.test(\"Status code is 201\", function () {\r",
+							"            pm.response.to.have.status(201);\r",
+							"        });\r",
+							"        pm.collectionVariables.set(\"reservationId\" + (i + j), pm.response.text());\r",
+							"        pm.collectionVariables.set(\"currentRoomId\", pm.collectionVariables.get('roomId' + j));\r",
+							"        postman.setNextRequest(\"Reserve Room\");\r",
+							"        j++;\r",
+							"    }\r",
+							"    i++;\r",
+							"}\r",
+							"\r",
+							"postman.setNextRequest(\"Get All Reservations\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"custId\": {{currentUserId}},\r\n\"startDate\": \"2023-09-01\",\r\n\"endDate\": \"2023-09-07\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airbnb/reserve/{{currentRoomId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"reserve",
+						"{{currentRoomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Reservations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setNextRequest(null);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airbnb/getReservations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airbnb",
+						"getReservations"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "currentUserId",
+			"value": null
+		},
+		{
+			"key": "userId0",
+			"value": null
+		},
+		{
+			"key": "userId1",
+			"value": null
+		},
+		{
+			"key": "userId2",
+			"value": null
+		},
+		{
+			"key": "roomId0",
+			"value": ""
+		},
+		{
+			"key": "roomId1",
+			"value": ""
+		},
+		{
+			"key": "currentRoomId",
+			"value": ""
+		},
+		{
+			"key": "currentUserId0",
+			"value": ""
+		},
+		{
+			"key": "reservationId0",
+			"value": ""
+		},
+		{
+			"key": "reservationId1",
+			"value": ""
+		},
+		{
+			"key": "currentUserId2",
+			"value": ""
+		}
+	]
+}
